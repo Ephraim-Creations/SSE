@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scenes & Sets Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2C3E50;
+            --secondary: #E74C3C;
+            --accent: #3498DB;
+            --light: #ECF0F1;
+            --dark: #1A2530;
+            --sidebar-width: 250px;
+            --header-height: 70px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f7fa;
+            color: var(--dark);
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--dark);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            padding: 20px 0;
+            transition: transform 0.3s ease;
+        }
+
+        .brand {
+            padding: 0 20px 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 30px;
+        }
+
+        .brand h1 {
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-icon {
+            color: #F1C40F;
+        }
+
+        .nav-menu {
+            padding: 0 15px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .nav-item.active {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .nav-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h2 {
+            font-size: 24px;
+            color: var(--dark);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), #F1C40F);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dashboard Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .card.booking .card-icon { background: var(--secondary); }
+        .card.mail .card-icon { background: var(--accent); }
+        .card.blog .card-icon { background: #27AE60; }
+        .card.portfolio .card-icon { background: #8E44AD; }
+
+        .card h3 {
+            font-size: 32px;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        .card p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Table Styling */
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            background: var(--light);
+            color: var(--dark);
+            font-weight: 600;
+            border-bottom: 2px solid #ddd;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f9f9f9;
+        }
+
+        /* Form Styling */
+        .form-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980B9;
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        /* Settings Grid */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .setting-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            margin-top: 15px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--accent);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <h1>
+                    <i class="fas fa-theater-masks brand-icon"></i>
+                    Scenes & Sets
+                </h1>
+            </div>
+            
+            <nav class="nav-menu">
+                <div class="nav-item active" data-section="dashboard">
+                    <i class="fas fa-home"></i>
+                    Dashboard
+                </div>
+                
+                <div class="nav-item" data-section="bookings">
+                    <i class="fas fa-calendar-check"></i>
+                    Bookings
+                    <span style="margin-left: auto; background: var(--secondary); color: white; padding: 2px 8px; border-radius: 10px; font-size: 12px;">3</span>
+                </div>
+                
+                <div class="nav-item" data-section="mailing">
+                    <i class="fas fa-envelope"></i>
+                    Mailing List
+                </div>
+                
+                <div class="nav-item" data-section="blog">
+                    <i class="fas fa-blog"></i>
+                    Blog
+                </div>
+                
+                <div class="nav-item" data-section="portfolio">
+                    <i class="fas fa-images"></i>
+                    Portfolio
+                </div>
+                
+                <div class="nav-item" data-section="clients">
+                    <i class="fas fa-users"></i>
+                    Clients
+                </div>
+                
+                <div class="nav-item" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div>
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h2 id="pageTitle">Dashboard Overview</h2>
+                </div>
+                
+                <div class="user-info">
+                    <div class="user-avatar">AD</div>
+                    <div>
+                        <div style="font-weight: 600;">Admin User</div>
+                        <div style="font-size: 14px; color: #666;">Scenes & Sets Admin</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="cards-grid">
+                    <div class="card booking">
+                        <div class="card-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3>24</h3>
+                        <p>Active Bookings</p>
+                        <div style="margin-top: 15px; font-size: 14px; color: #27AE60;">
+                            <i class="fas fa-arrow-up"></i> 3 new this week
+                        </div>
+                    </div>
+                    
+                    <div class="card mail">
+                        <div class="card-icon">
+                            <i class="fas fa-envelope-open-text"></i>
+                        </div>
+                        <h3>1,240</h3>
+                        <p>Email Subscribers</p>
+                        <div style="margin-top: 15px; font-size: 14px; color: #27AE60;">
+                            <i class="fas fa-arrow-up"></i> 45 new this month
+                        </div>
+                    </div>
+                    
+                    <div class="card blog">
+                        <div class="card-icon">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
+                        <h3>18</h3>
+                        <p>Blog Posts</p>
+                        <div style="margin-top: 15px; font-size: 14px;">
+                            <i class="fas fa-clock"></i> 2 drafts pending
+                        </div>
+                    </div>
+                    
+                    <div class="card portfolio">
+                        <div class="card-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <h3>156</h3>
+                        <p>Portfolio Items</p>
+                        <div style="margin-top: 15px; font-size: 14px; color: #E74C3C;">
+                            <i class="fas fa-exclamation-circle"></i> Update needed
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <h3 style="margin-bottom: 20px; color: var(--dark);">Recent Activity</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>Description</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><i class="fas fa-calendar-plus" style="color: var(--accent);"></i> Booking</td>
+                                <td>New booking from Sarah Johnson</td>
+                                <td>10 minutes ago</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-user-plus" style="color: #27AE60;"></i> Subscriber</td>
+                                <td>New email subscriber added</td>
+                                <td>1 hour ago</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-newspaper" style="color: #8E44AD;"></i> Blog Post</td>
+                                <td>"Set Design Trends" published</td>
+                                <td>2 hours ago</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-image" style="color: #F1C40F;"></i> Portfolio</td>
+                                <td>New project added to portfolio</td>
+                                <td>1 day ago</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Bookings Section -->
+            <section id="bookings" class="content-section">
+                <div class="table-container">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="color: var(--dark);">Active Bookings</h3>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add Booking
+                        </button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Service</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John Smith</td>
+                                <td>Product Photography</td>
+                                <td>Jan 15, 2024</td>
+                                <td><span style="background: #D1FAE5; color: #065F46; padding: 5px 10px; border-radius: 20px; font-size: 12px;">Confirmed</span></td>
+                                <td>
+                                    <button style="background: none; border: none; color: var(--accent); cursor: pointer; margin-right: 10px;">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button style="background: none; border: none; color: var(--secondary); cursor: pointer;">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Acme Corporation</td>
+                                <td>Corporate Event</td>
+                                <td>Jan 18, 2024</td>
+                                <td><span style="background: #FEF3C7; color: #92400E; padding: 5px 10px; border-radius: 20px; font-size: 12px;">Pending</span></td>
+                                <td>
+                                    <button style="background: none; border: none; color: var(--accent); cursor: pointer; margin-right: 10px;">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button style="background: none; border: none; color: var(--secondary); cursor: pointer;">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Jane Doe</td>
+                                <td>Portrait Session</td>
+                                <td>Jan 20, 2024</td>
+                                <td><span style="background: #DBEAFE; color: #1E40AF; padding: 5px 10px; border-radius: 20px; font-size: 12px;">Scheduled</span></td>
+                                <td>
+                                    <button style="background: none; border: none; color: var(--accent); cursor: pointer; margin-right: 10px;">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button style="background: none; border: none; color: var(--secondary); cursor: pointer;">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Mailing List Section -->
+            <section id="mailing" class="content-section">
+                <div class="form-container">
+                    <h3 style="margin-bottom: 25px; color: var(--dark);">Send Newsletter</h3>
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input type="text" class="form-control" placeholder="Enter email subject">
+                    </div>
+                    <div class="form-group">
+                        <label>Content</label>
+                        <textarea class="form-control" rows="6" placeholder="Write your newsletter content..."></textarea>
+                        <input type="file" name="" id="">
+                    </div>
+                    <div class="form-group">
+                        <label>Recipients</label>
+                        <select class="form-control">
+                            <option>All Subscribers (1,240)</option>
+                            <option>Active Clients (320)</option>
+                            <option>Past Clients (540)</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Send Newsletter
+                    </button>
+                </div>
+            </section>
+
+            <!-- Blog Section -->
+            <section id="blog" class="content-section">
+                <div class="table-container">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="color: var(--dark);">Blog Posts</h3>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus"></i> New Post
+                        </button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>The Art of Set Design</td>
+                                <td>Design</td>
+                                <td>Jan 10, 2024</td>
+                                <td><span style="background: #D1FAE5; color: #065F46; padding: 5px 10px; border-radius: 20px; font-size: 12px;">Published</span></td>
+                                <td>
+                                    <button style="background: none; border: none; color: var(--accent); cursor: pointer; margin-right: 10px;">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button style="background: none; border: none; color: var(--secondary); cursor: pointer;">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Lighting Techniques 2024</td>
+                                <td>Photography</td>
+                                <td>Jan 8, 2024</td>
+                                <td><span style="background: #FEF3C7; color: #92400E; padding: 5px 10px; border-radius: 20px; font-size: 12px;">Draft</span></td>
+                                <td>
+                                    <button style="background: none; border: none; color: var(--accent); cursor: pointer; margin-right: 10px;">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button style="background: none; border: none; color: var(--secondary); cursor: pointer;">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Behind the Scenes: Film Production</td>
+                                <td>Behind Scenes</td>
+                                <td>Jan 5, 2024</td>
+                                <td><span style="background: #D1FAE5; color: #065F46; padding: 5px 10px; border-radius: 20px; font-size: 12px;">Published</span></td>
+                                <td>
+                                    <button style="background: none; border: none; color: var(--accent); cursor: pointer; margin-right: 10px;">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button style="background: none; border: none; color: var(--secondary); cursor: pointer;">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Portfolio Section -->
+            <section id="portfolio" class="content-section">
+                <div class="form-container">
+                    <h3 style="margin-bottom: 25px; color: var(--dark);">Add Portfolio Item</h3>
+                    <div class="form-group">
+                        <label>Project Title</label>
+                        <input type="text" class="form-control" placeholder="Enter project title">
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select class="form-control">
+                            <option>Photography</option>
+                            <option>Set Design</option>
+                            <option>Event Coverage</option>
+                            <option>Video Production</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" rows="4" placeholder="Describe the project..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Upload Images</label>
+                        <input type="file" class="form-control" multiple>
+                    </div>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-upload"></i> Upload Project
+                    </button>
+                </div>
+            </section>
+
+            <!-- Clients Section -->
+            <section id="clients" class="content-section">
+                <div class="table-container">
+                    <h3 style="margin-bottom: 20px; color: var(--dark);">Client List</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Type</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John Smith</td>
+                                <td>john@example.com</td>
+                                <td>(555) 123-4567</td>
+                                <td>Corporate</td>
+                                <td>
+                                    <button style="background: none; border: none; color: var(--accent); cursor: pointer; margin-right: 10px;">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button style="background: none; border: none; color: var(--secondary); cursor: pointer;">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Sarah Johnson</td>
+                                <td>sarah@example.com</td>
+                                <td>(555) 987-6543</td>
+                                <td>Individual</td>
+                                <td>
+                                    <button style="background: none; border: none; color: var(--accent); cursor: pointer; margin-right: 10px;">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button style="background: none; border: none; color: var(--secondary); cursor: pointer;">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Acme Corporation</td>
+                                <td>contact@acme.com</td>
+                                <td>(555) 456-7890</td>
+                                <td>Corporate</td>
+                                <td>
+                                    <button style="background: none; border: none; color: var(--accent); cursor: pointer; margin-right: 10px;">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button style="background: none; border: none; color: var(--secondary); cursor: pointer;">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="content-section">
+                <div class="settings-grid">
+                    <div class="setting-card">
+                        <h4 style="margin-bottom: 20px; color: var(--dark);">
+                            <i class="fas fa-bell" style="color: var(--accent); margin-right: 10px;"></i>
+                            Notifications
+                        </h4>
+                        <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                            <span>Email Notifications</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                            <span>SMS Alerts</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>Booking Reminders</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="setting-card">
+                        <h4 style="margin-bottom: 20px; color: var(--dark);">
+                            <i class="fas fa-user-shield" style="color: #27AE60; margin-right: 10px;"></i>
+                            Security
+                        </h4>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px;">Change Password</label>
+                            <input type="password" class="form-control" placeholder="New password">
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%;">
+                            <i class="fas fa-key"></i> Update Password
+                        </button>
+                    </div>
+
+                    <div class="setting-card">
+                        <h4 style="margin-bottom: 20px; color: var(--dark);">
+                            <i class="fas fa-paint-brush" style="color: #8E44AD; margin-right: 10px;"></i>
+                            Appearance
+                        </h4>
+                        <div class="form-group">
+                            <label>Theme</label>
+                            <select class="form-control">
+                                <option>Light Theme</option>
+                                <option>Dark Theme</option>
+                                <option>Auto (System)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Language</label>
+                            <select class="form-control">
+                                <option>English</option>
+                                <option>Spanish</option>
+                                <option>French</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-card">
+                        <h4 style="margin-bottom: 20px; color: var(--dark);">
+                            <i class="fas fa-database" style="color: #F1C40F; margin-right: 10px;"></i>
+                            Data Management
+                        </h4>
+                        <p style="color: #666; margin-bottom: 20px; font-size: 14px;">
+                            Export your data or reset the system settings.
+                        </p>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-download"></i> Export Data
+                            </button>
+                            <button class="btn" style="background: #E74C3C; color: white;">
+                                <i class="fas fa-trash"></i> Clear All
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <p>Scenes & Sets Admin Panel • v1.0 • © 2024</p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // DOM Elements
+        const sidebar = document.getElementById('sidebar');
+        const menuToggle = document.getElementById('menuToggle');
+        const pageTitle = document.getElementById('pageTitle');
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('.content-section');
+
+        // Page Titles for each section
+        const pageTitles = {
+            dashboard: 'Dashboard Overview',
+            bookings: 'Bookings Management',
+            mailing: 'Mailing List',
+            blog: 'Blog Management',
+            portfolio: 'Portfolio',
+            clients: 'Clients',
+            settings: 'Settings'
+        };
+
+        // Mobile Menu Toggle
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        // Navigation Switching
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove active class from all items
+                navItems.forEach(nav => nav.classList.remove('active'));
+                
+                // Add active class to clicked item
+                item.classList.add('active');
+                
+                // Get section ID
+                const sectionId = item.getAttribute('data-section');
+                
+                // Hide all sections
+                sections.forEach(section => section.classList.remove('active'));
+                
+                // Show selected section
+                document.getElementById(sectionId).classList.add('active');
+                
+                // Update page title
+                pageTitle.textContent = pageTitles[sectionId];
+                
+                // Close sidebar on mobile
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (event) => {
+            if (window.innerWidth <= 768) {
+                const isClickInsideSidebar = sidebar.contains(event.target);
+                const isClickOnToggle = menuToggle.contains(event.target);
+                
+                if (!isClickInsideSidebar && !isClickOnToggle) {
+                    sidebar.classList.remove('active');
+                }
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+        // Form submissions
+        document.querySelectorAll('button[type="submit"], .btn-primary').forEach(btn => {
+            if (!btn.getAttribute('type') || btn.getAttribute('type') === 'button') {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const sectionId = document.querySelector('.content-section.active').id;
+                    
+                    if (sectionId === 'mailing') {
+                        alert('Newsletter sent successfully!');
+                    } else if (sectionId === 'portfolio') {
+                        alert('Portfolio item added successfully!');
+                    } else if (sectionId === 'settings') {
+                        const action = btn.textContent.trim();
+                        if (action.includes('Password')) {
+                            alert('Password updated successfully!');
+                        } else if (action.includes('Export')) {
+                            alert('Data export started. You will receive an email shortly.');
+                        } else if (action.includes('Clear')) {
+                            if (confirm('Are you sure you want to clear all data? This cannot be undone.')) {
+                                alert('Data cleared successfully.');
+                            }
+                        }
+                    } else {
+                        alert('Action completed successfully!');
+                    }
+                });
+            }
+        });
+
+        // Initialize
+        console.log('Scenes & Sets Admin Panel loaded');
+    </script>
+</body>
+</html>
