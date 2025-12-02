@@ -4,121 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Your Corporate Event | Simple & Quick</title>
+    <title>Book Your Corporate Event | Scenes & Sets Events</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="shortcut icon" href="/images/sse-logo (1).png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
-        :root {
-            --primary-pink: #e91e63;
-            --dark-pink: #ad1457;
-            --light-pink: #fce4ec;
-            --white: #ffffff;
-            --light-gray: #f5f5f5;
-            --border-gray: #e0e0e0;
-            --dark-gray: #333333;
-            --text-gray: #666666;
-            --medium-gray: #9e9e9e;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-hover: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--light-gray);
-            color: var(--dark-gray);
-            line-height: 1.6;
-        }
-
-        /* Header Styles */
-        .header {
-            background: var(--white);
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-        }
-
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logo {
-            height: 40px;
-            width: auto;
-        }
-
-        .nav-brand h3 {
-            color: var(--dark-gray);
-            font-size: 1.2rem;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: var(--dark-gray);
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            color: var(--primary-pink);
-        }
-
-        .cta-button {
-            background: var(--primary-pink);
-            color: var(--white) !important;
-            padding: 0.5rem 1.5rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .cta-button:hover {
-            background: var(--dark-pink);
-            transform: translateY(-2px);
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 4px;
-            cursor: pointer;
-        }
-
-        .hamburger-line {
-            width: 25px;
-            height: 3px;
-            background: var(--dark-gray);
-            transition: all 0.3s ease;
-        }
-
-        /* Hero Section - Matching About Page Style */
+        /* Page Specific Styles */
         .page-hero {
             position: relative;
             padding: 8rem 0 4rem;
@@ -148,10 +41,10 @@
         }
 
         .page-hero-title {
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-weight: 700;
             line-height: 1.2;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .page-hero-subtitle {
@@ -164,8 +57,8 @@
 
         /* Main Content */
         .main-container {
-            max-width: 1300px;
-            margin: 2rem auto;
+            max-width: 1200px;
+            margin: 2rem auto 4rem;
             padding: 0 2rem;
         }
 
@@ -193,19 +86,26 @@
             color: var(--medium-gray);
         }
 
-        /* Booking Section */
-        .booking-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            margin-bottom: 4rem;
-        }
-
+        /* Simplified Booking Form */
         .booking-form-container {
             background: var(--white);
-            border-radius: 15px;
+            border-radius: 20px;
             box-shadow: var(--shadow-hover);
             padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .booking-form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-pink), var(--dark-pink));
         }
 
         .form-header {
@@ -214,50 +114,105 @@
         }
 
         .form-header h2 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             color: var(--dark-gray);
             margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-pink), var(--dark-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .form-header p {
             color: var(--text-gray);
+            font-size: 1.1rem;
         }
 
+        /* Form Elements */
         .form-group {
             margin-bottom: 1.5rem;
+            position: relative;
         }
 
         .form-group label {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             margin-bottom: 0.5rem;
             font-weight: 600;
             color: var(--dark-gray);
+            font-size: 0.95rem;
+        }
+
+        .required {
+            color: var(--primary-pink);
+            font-size: 0.8rem;
+            font-weight: 500;
         }
 
         .form-control {
             width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--border-gray);
-            border-radius: 8px;
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--border-gray);
+            border-radius: 10px;
             font-size: 1rem;
             transition: all 0.3s ease;
+            background: var(--white);
+            font-family: inherit;
         }
 
         .form-control:focus {
             outline: none;
             border-color: var(--primary-pink);
-            box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.1);
+            box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.15);
         }
 
+        .form-control.error {
+            border-color: #dc2626;
+            background: #fef2f2;
+        }
+
+        .form-control.success {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        /* Instruction Text */
+        .instruction-text {
+            display: block;
+            margin-top: 0.375rem;
+            font-size: 0.875rem;
+            color: var(--medium-gray);
+            line-height: 1.4;
+            font-style: italic;
+        }
+
+        /* Form Row */
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
+        @media (max-width: 576px) {
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        /* Textarea */
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+
+        /* Submit Button */
         .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
+            padding: 1rem 2rem;
+            border-radius: 10px;
             font-weight: 600;
             text-decoration: none;
             transition: all 0.3s ease;
@@ -266,71 +221,58 @@
             font-size: 1rem;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            width: 100%;
             justify-content: center;
+            gap: 0.75rem;
+            width: 100%;
         }
 
         .btn-submit {
-            background: var(--primary-pink);
+            background: linear-gradient(135deg, var(--primary-pink), var(--dark-pink));
             color: var(--white);
+            position: relative;
+            overflow: hidden;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 1.125rem 2rem;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
         }
 
         .btn-submit:hover {
-            background: var(--dark-pink);
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, var(--dark-pink), var(--primary-pink));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.3);
         }
 
-        /* Benefits Sidebar */
-        .benefits-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
+        .btn-submit:hover::before {
+            left: 100%;
         }
 
-        .benefit-card {
-            background: var(--white);
-            border-radius: 10px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .benefit-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--light-pink);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-pink);
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-
-        .benefit-content h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: var(--dark-gray);
-        }
-
-        .benefit-content p {
-            color: var(--text-gray);
-            font-size: 0.95rem;
+        .btn-submit:active {
+            transform: translateY(-1px);
         }
 
         /* Success Message */
         .success-message {
             text-align: center;
-            padding: 3rem;
+            padding: 3rem 2rem;
             background: var(--white);
-            border-radius: 15px;
+            border-radius: 20px;
             box-shadow: var(--shadow-hover);
             margin-bottom: 4rem;
             display: none;
+            border-top: 4px solid var(--primary-pink);
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .success-icon {
@@ -352,250 +294,39 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-        }
-
-        /* FAQ Section */
-        .faq-section {
-            margin-bottom: 4rem;
-        }
-
-        .faq-section h2 {
-            text-align: center;
-            font-size: 2.2rem;
-            margin-bottom: 2rem;
-            color: var(--dark-gray);
-        }
-
-        .faq-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-        }
-
-        .faq-column {
-            flex: 1;
-            min-width: 300px;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .faq-item {
-            background: var(--white);
-            border-radius: 10px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-        }
-
-        .faq-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .faq-question {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--dark-gray);
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 0.5rem;
-        }
-
-        .faq-question i {
-            color: var(--primary-pink);
-            margin-top: 0.2rem;
-        }
-
-        .faq-answer {
-            color: var(--text-gray);
-            font-size: 0.95rem;
-        }
-
-        /* Footer Styles */
-        .footer {
-            background: var(--dark-gray);
-            color: var(--white);
-            padding: 3rem 0 1.5rem;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-main {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .footer-brand {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .footer-logo {
-            height: 50px;
-            width: auto;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            color: var(--white);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            background: var(--primary-pink);
-            transform: translateY(-3px);
-        }
-
-        .footer-newsletter h4 {
-            margin-bottom: 0.5rem;
-        }
-
-        .newsletter-form {
-            margin-top: 1rem;
-        }
-
-        .newsletter-input {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .newsletter-input input {
-            flex: 1;
-            padding: 0.75rem;
-            border: none;
-            border-radius: 8px;
-        }
-
-        .newsletter-btn {
-            background: var(--primary-pink);
-            color: var(--white);
-            border: none;
-            border-radius: 8px;
-            padding: 0 1rem;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .newsletter-btn:hover {
-            background: var(--dark-pink);
-        }
-
-        .footer-links {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-        }
-
-        .footer-column h4 {
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-column a {
-            color: #ccc;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-column a:hover {
-            color: var(--primary-pink);
-        }
-
-        .contact-info p {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #ccc;
-            font-size: 0.9rem;
+            line-height: 1.6;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
             .page-hero {
                 padding: 6rem 0 3rem;
             }
             
             .page-hero-title {
-                font-size: 2.5rem;
+                font-size: 2.25rem;
             }
             
             .page-hero-subtitle {
                 font-size: 1.125rem;
             }
-            
-            .booking-section {
-                grid-template-columns: 1fr;
+
+            .main-container {
+                padding: 0 1.5rem;
             }
 
-            .form-row {
-                grid-template-columns: 1fr;
+            .booking-form-container {
+                padding: 2rem;
             }
 
-            .faq-column {
-                min-width: 100%;
-            }
-
-            .footer-main {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-links {
-                grid-template-columns: repeat(2, 1fr);
+            .form-header h2 {
+                font-size: 1.75rem;
             }
         }
-        
+
         @media (max-width: 480px) {
             .page-hero {
-                padding: 5rem 0 2rem;
+                padding: 5rem 0 2.5rem;
             }
             
             .page-hero-title {
@@ -606,14 +337,46 @@
                 font-size: 1rem;
             }
 
-            .footer-links {
-                grid-template-columns: 1fr;
+            .booking-form-container {
+                padding: 1.5rem;
+            }
+
+            .success-message h2 {
+                font-size: 2rem;
             }
         }
     </style>
 </head>
 
 <body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-content">
+            <div class="preloader-spinner">
+                <div class="spinner-ring"></div>
+                <div class="preloader-logo">
+                    <img src="/images/sse-logo (1).png" alt="Scenes & Sets Events">
+                </div>
+            </div>
+            <div class="preloader-text">
+                <p>Preparing your booking...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top">
+        <div class="back-to-top-progress">
+            <svg class="progress-ring" width="60" height="60">
+                <circle class="progress-ring-bg" cx="30" cy="30" r="26" fill="transparent" stroke-width="2"/>
+                <circle class="progress-ring-circle" cx="30" cy="30" r="26" fill="transparent" stroke-width="2"/>
+            </svg>
+            <div class="back-to-top-inner">
+                <i class="fas fa-chevron-up"></i>
+            </div>
+        </div>
+    </div>
+
     <!-- Header -->
     <header class="header" id="header">
         <div class="header-container">
@@ -624,7 +387,7 @@
                 </div>
 
                 <ul class="nav-links">
-                    <li><a href="./" class="nav-link">Home</a></li>
+                    <li><a href="/" class="nav-link">Home</a></li>
                     <li><a href="/about/index.html" class="nav-link">About</a></li>
                     <li><a href="/services/" class="nav-link">Services</a></li>
                     <li><a href="#blog" class="nav-link">Blog</a></li>
@@ -640,12 +403,25 @@
         </div>
     </header>
 
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay">
+        <div class="mobile-menu">
+            <ul class="mobile-nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/about/index.html" class="nav-link">About</a></li>
+                <li><a href="/services/" class="nav-link">Services</a></li>
+                <li><a href="#blog" class="nav-link">Blog</a></li>
+                <li><a href="/bookings/simple.html" class="nav-link cta-button">Book Now</a></li>
+            </ul>
+        </div>
+    </div>
+
     <!-- Page Hero Section -->
     <section class="page-hero">
         <div class="page-hero-background"></div>
         <div class="page-hero-content">
             <h1 class="page-hero-title">Book Your Corporate Event</h1>
-            <p class="page-hero-subtitle">Tell us your number and we'll call you to discuss your event - no forms, no hassle</p>
+            <p class="page-hero-subtitle">Complete this form and we'll contact you to discuss your perfect event setup</p>
         </div>
     </section>
 
@@ -653,98 +429,136 @@
     <main class="main-container">
         <!-- Breadcrumb -->
         <div class="breadcrumb">
-            <a href="#">Home</a>
+            <a href="/">Home</a>
             <i class="fas fa-chevron-right"></i>
-            <a href="#">Services</a>
+            <a href="/services/">Services</a>
             <i class="fas fa-chevron-right"></i>
             <span>Book Event</span>
         </div>
 
-        <!-- Booking Section -->
-        <div class="booking-section">
-            <!-- Booking Form -->
-            <div class="booking-form-container">
-                <div class="form-header">
-                    <h2>We'll Call You Back</h2>
-                    <p>Just provide your phone number and we'll call to discuss your event</p>
-                </div>
-
-                <form id="booking-form">
-                    <div class="form-group">
-                        <label for="phone">Your Phone Number *</label>
-                        <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number"
-                            required>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="first-name">First Name</label>
-                            <input type="text" class="form-control" id="first-name" placeholder="Your first name">
-                        </div>
-                        <div class="form-group">
-                            <label for="last-name">Last Name</label>
-                            <input type="text" class="form-control" id="last-name" placeholder="Your last name">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="best-time">Best Time to Call</label>
-                        <select class="form-control" id="best-time">
-                            <option value="">Select preferred time</option>
-                            <option value="morning">Morning (9AM-12PM)</option>
-                            <option value="afternoon">Afternoon (12PM-5PM)</option>
-                            <option value="evening">Evening (5PM-8PM)</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn btn-submit">
-                        <i class="fas fa-phone"></i> Call Me Back
-                    </button>
-                </form>
+        <!-- Simplified Booking Form -->
+        <div class="booking-form-container">
+            <div class="form-header">
+                <h2>Get Your Custom Quote</h2>
+                <p>Fill in your details and we'll prepare a customized quote for your event</p>
             </div>
 
-            <!-- Benefits Sidebar -->
-            <div class="benefits-sidebar">
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <i class="fas fa-clock"></i>
+            <form id="booking-form">
+                <!-- Contact Information -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">
+                            Your Name
+                            <span class="required">* Required</span>
+                        </label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter your full name" required>
+                        <small class="instruction-text">
+                            Please enter your full name as you'd like to be addressed
+                        </small>
                     </div>
-                    <div class="benefit-content">
-                        <h3>Quick Response</h3>
-                        <p>We'll call you back within 2 hours during business hours. No waiting for email responses.</p>
-                    </div>
-                </div>
-
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <i class="fas fa-comments"></i>
-                    </div>
-                    <div class="benefit-content">
-                        <h3>Personal Consultation</h3>
-                        <p>Speak directly with our event specialist who will understand your vision and needs.</p>
-                    </div>
-                </div>
-
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <div class="benefit-content">
-                        <h3>Expert Advice</h3>
-                        <p>Get professional recommendations tailored to your specific event requirements.</p>
+                    
+                    <div class="form-group">
+                        <label for="email">
+                            Your Email
+                            <span class="required">* Required</span>
+                        </label>
+                        <input type="email" class="form-control" id="email" placeholder="your.email@example.com" required>
+                        <small class="instruction-text">
+                            We'll send your custom quote to this email address
+                        </small>
                     </div>
                 </div>
 
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <i class="fas fa-handshake"></i>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="company">
+                            Company Name
+                            <span class="required">* Required</span>
+                        </label>
+                        <input type="text" class="form-control" id="company" placeholder="Enter your company name" required>
+                        <small class="instruction-text">
+                            Your company or organization name
+                        </small>
                     </div>
-                    <div class="benefit-content">
-                        <h3>No Pressure</h3>
-                        <p>This is just an initial consultation with no obligation to book with us.</p>
+                    
+                    <div class="form-group">
+                        <label for="phone">
+                            Phone Number
+                            <span class="required">* Required</span>
+                        </label>
+                        <input type="tel" class="form-control" id="phone" placeholder="(123) 456-7890" required>
+                        <small class="instruction-text">
+                            Best number to reach you for event details
+                        </small>
                     </div>
                 </div>
-            </div>
+
+                <!-- Event Type -->
+                <div class="form-group">
+                    <label for="event-type">
+                        Event Type
+                        <span class="required">* Required</span>
+                    </label>
+                    <select class="form-control" id="event-type" required>
+                        <option value="">Select event type</option>
+                        <option value="corporate-conference">Corporate Conference</option>
+                        <option value="team-building">Team Building</option>
+                        <option value="product-launch">Product Launch</option>
+                        <option value="trade-show">Trade Show</option>
+                        <option value="award-ceremony">Award Ceremony</option>
+                        <option value="shareholder-meeting">Shareholder Meeting</option>
+                        <option value="gala-dinner">Gala Dinner</option>
+                        <option value="training-session">Training Session</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <small class="instruction-text">
+                        Select the type of event you're planning
+                    </small>
+                </div>
+
+                <!-- Date and Attendees -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="event-date">
+                            Event Date
+                            <span class="required">* Required</span>
+                        </label>
+                        <input type="text" class="form-control" id="event-date" placeholder="mm/dd/yyyy" required>
+                        <small class="instruction-text">
+                            Click to select your preferred event date
+                        </small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="attendees">
+                            Expected Attendees
+                            <span class="required">* Required</span>
+                        </label>
+                        <input type="number" class="form-control" id="attendees" placeholder="e.g., 100" min="1" max="10000" required>
+                        <small class="instruction-text">
+                            Estimated number of attendees for planning purposes
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Event Details -->
+                <div class="form-group">
+                    <label for="message">
+                        Tell us about your event vision and requirements...
+                        <span class="required">* Required</span>
+                    </label>
+                    <textarea class="form-control" id="message" placeholder="Describe your event vision, theme, special requirements, and any other details that will help us create a perfect quote for you..." required></textarea>
+                    <small class="instruction-text">
+                        Please provide as much detail as possible about your event needs
+                    </small>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-submit">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    Get My Custom Quote
+                </button>
+            </form>
         </div>
 
         <!-- Success Message (Initially Hidden) -->
@@ -752,122 +566,136 @@
             <div class="success-icon">
                 <i class="fas fa-check-circle"></i>
             </div>
-            <h2>Request Submitted Successfully!</h2>
-            <p>Thank you for your interest! We've received your information and will call you at your preferred time.
-            </p>
-            <p>If you have any urgent questions, feel free to call us directly at <strong>(555) 123-4567</strong>.</p>
-        </div>
-
-        <!-- FAQ Section -->
-        <div class="faq-section">
-            <h2>Frequently Asked Questions</h2>
-            <div class="faq-container">
-                <div class="faq-column">
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <i class="fas fa-question-circle"></i>
-                            How quickly will you call me back?
-                        </div>
-                        <div class="faq-answer">
-                            We typically call back within 2 hours during business hours (9AM-6PM). For requests
-                            submitted outside business hours, we'll call you first thing the next business day.
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <i class="fas fa-question-circle"></i>
-                            Is there any commitment with this call?
-                        </div>
-                        <div class="faq-answer">
-                            No, there's absolutely no commitment. This is just a consultation to understand your needs
-                            and provide initial recommendations.
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <i class="fas fa-question-circle"></i>
-                            What information do I need to have ready?
-                        </div>
-                        <div class="faq-answer">
-                            Just a general idea of your event type, approximate date, and number of attendees. Don't
-                            worry if you're not sure - we'll guide you through the process.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-column">
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <i class="fas fa-question-circle"></i>
-                            Do you handle all types of corporate events?
-                        </div>
-                        <div class="faq-answer">
-                            Yes, we specialize in conferences, team building, product launches, training sessions, award
-                            ceremonies, and more. We'll discuss your specific needs during our call.
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <i class="fas fa-question-circle"></i>
-                            What if I don't know my budget yet?
-                        </div>
-                        <div class="faq-answer">
-                            No problem! We'll provide options at different price points to help you make an informed
-                            decision based on your requirements.
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <i class="fas fa-question-circle"></i>
-                            Can I email instead of calling?
-                        </div>
-                        <div class="faq-answer">
-                            Of course! If you prefer email, just mention it in your message and we'll follow up via
-                            email instead of calling.
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <h2>Quote Request Submitted!</h2>
+            <p>Thank you for your interest in Scenes & Sets Events! We've received your request and will review it within 24 hours.</p>
+            <p>A confirmation email has been sent to your provided email address with your request details.</p>
+            <p><strong>Next Steps:</strong> Our event specialist will contact you to discuss your requirements and provide a customized quote.</p>
         </div>
     </main>
 
- 
-
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="/js/index.js"></script>
     <script>
-        // Form submission
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // Initialize date picker
+        flatpickr("#event-date", {
+            minDate: "today",
+            dateFormat: "m/d/Y",
+            altInput: true,
+            altFormat: "F j, Y",
+            placeholder: "Select a date",
+            disable: [
+                function(date) {
+                    // Disable Sundays
+                    return (date.getDay() === 0);
+                }
+            ]
+        });
+
+        // Form validation and submission
         document.getElementById('booking-form').addEventListener('submit', function (e) {
             e.preventDefault();
-
+            
             // Get form values
-            const phone = document.getElementById('phone').value;
+            const formData = {
+                name: document.getElementById('name').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                company: document.getElementById('company').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                eventType: document.getElementById('event-type').value,
+                eventDate: document.getElementById('event-date').value,
+                attendees: document.getElementById('attendees').value,
+                message: document.getElementById('message').value.trim()
+            };
 
-            // Simple validation
-            if (!phone) {
-                alert('Please provide your phone number so we can call you back.');
+            // Validation
+            const errors = [];
+            
+            if (!formData.name) errors.push("Name is required");
+            if (!formData.email) errors.push("Email is required");
+            if (!formData.company) errors.push("Company name is required");
+            if (!formData.phone) errors.push("Phone number is required");
+            if (!formData.eventType) errors.push("Please select an event type");
+            if (!formData.eventDate) errors.push("Please select an event date");
+            if (!formData.attendees) errors.push("Please enter expected number of attendees");
+            if (!formData.message) errors.push("Please tell us about your event vision");
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (formData.email && !emailRegex.test(formData.email)) {
+                errors.push("Please enter a valid email address");
+            }
+
+            // Phone validation (basic)
+            const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+            const cleanPhone = formData.phone.replace(/\D/g, '');
+            if (formData.phone && !phoneRegex.test(cleanPhone)) {
+                errors.push("Please enter a valid phone number");
+            }
+
+            if (errors.length > 0) {
+                alert("Please fix the following errors:\n\n" + errors.join("\n"));
                 return;
             }
 
-            // In a real application, you would send this data to your server
-            // For this example, we'll just show the success message
+            // Show loading state
+            const submitBtn = document.querySelector('.btn-submit');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            submitBtn.disabled = true;
 
-            // Hide the form and show success message
-            document.querySelector('.booking-section').style.display = 'none';
-            document.getElementById('success-message').style.display = 'block';
+            // Simulate API call
+            setTimeout(() => {
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
 
-            // Scroll to success message
-            document.getElementById('success-message').scrollIntoView({ behavior: 'smooth' });
+                // Hide form and show success message
+                document.querySelector('.booking-form-container').style.display = 'none';
+                document.getElementById('success-message').style.display = 'block';
+
+                // Scroll to success message
+                document.getElementById('success-message').scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+
+                // Log form data (in real app, send to server)
+                console.log('Form submitted:', formData);
+
+                // Show notification
+                if (window.showNotification) {
+                    window.showNotification('Your quote request has been submitted successfully! We\'ll contact you within 24 hours.', 'success');
+                } else {
+                    alert('Your quote request has been submitted successfully! We\'ll contact you within 24 hours.');
+                }
+
+                // Reset form
+                document.getElementById('booking-form').reset();
+
+            }, 1500);
         });
 
-        // Mobile menu toggle
-        document.querySelector('.hamburger').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        // Add input validation styling
+        const inputs = document.querySelectorAll('.form-control');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.value.trim() === '' && this.hasAttribute('required')) {
+                    this.classList.add('error');
+                    this.classList.remove('success');
+                } else if (this.value.trim() !== '' && this.hasAttribute('required')) {
+                    this.classList.add('success');
+                    this.classList.remove('error');
+                }
+            });
         });
     </script>
 </body>
-
 </html>
