@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found | Scenes & Sets Events</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="/images/sse-logo (1).png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-pink: #E91E63;
+            --dark-pink: #AD1457;
+            --light-pink: #F8BBD9;
+            --lighter-pink: #FCE4EC;
+            --white: #FFFFFF;
+            --dark-gray: #333333;
+            --medium-gray: #666666;
+            --light-gray: #F5F5F5;
+            --text-gray: #666666;
+            --border-gray: #E0E0E0;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--lighter-pink) 0%, var(--white) 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            padding: 3rem;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-hover);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-pink), var(--dark-pink));
+        }
+
+        .error-icon {
+            font-size: 6rem;
+            color: var(--primary-pink);
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        h1 {
+            font-size: 4rem;
+            color: var(--dark-gray);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-pink), var(--dark-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: var(--dark-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .redirect-info {
+            background: var(--lighter-pink);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+            border-left: 4px solid var(--primary-pink);
+        }
+
+        .redirect-info p {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .countdown {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-pink);
+            display: inline-block;
+            min-width: 30px;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            min-width: 200px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-pink), var(--dark-pink));
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--dark-pink), var(--primary-pink));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--primary-pink);
+            border: 2px solid var(--primary-pink);
+        }
+
+        .btn-secondary:hover {
+            background: var(--lighter-pink);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .logo-container {
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+            display: inline-block;
+        }
+
+        .company-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-pink);
+            margin-top: 0.5rem;
+        }
+
+        .error-code {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1rem;
+            color: var(--light-pink);
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        .suggestions {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: left;
+            margin-top: 2rem;
+        }
+
+        .suggestions h3 {
+            color: var(--dark-gray);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .suggestions ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .suggestions li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .suggestions li:before {
+            content: '→';
+            color: var(--primary-pink);
+            position: absolute;
+            left: 0;
+        }
+
+        .suggestions a {
+            color: var(--primary-pink);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .suggestions a:hover {
+            color: var(--dark-pink);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem;
+            }
+            
+            h1 {
+                font-size: 3rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .error-icon {
+                font-size: 4rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .error-icon {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="error-code">404</div>
+        
+        <div class="logo-container">
+            <img src="/images/sse-logo (1).png" alt="Scenes & Sets Events" class="logo">
+            <div class="company-name">Scenes & Sets Events</div>
+        </div>
+        
+        <div class="error-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        
+        <h1>Oops!</h1>
+        <h2>Page Not Found</h2>
+        
+        <p>The page you're looking for doesn't exist or has been moved. Don't worry though, we'll help you get back on track.</p>
+        
+        <div class="redirect-info">
+            <p>You will be automatically redirected to our Services page in <span class="countdown" id="countdown">10</span> seconds.</p>
+            <p>Or click the button below to go there immediately.</p>
+        </div>
+        
+        <div class="action-buttons">
+            <a href="/services/" class="btn btn-primary">
+                <i class="fas fa-arrow-right"></i>
+                Go to Services
+            </a>
+            
+            <a href="/" class="btn btn-secondary">
+                <i class="fas fa-home"></i>
+                Back to Home
+            </a>
+        </div>
+        
+        <div class="suggestions">
+            <h3><i class="fas fa-lightbulb"></i> What you can do next:</h3>
+            <ul>
+                <li><a href="/services/">Browse our Services</a> to see what we offer</li>
+                <li><a href="/bookings/simple.html">Book an Event</a> with our quick booking form</li>
+                <li><a href="/about/index.html">Learn more about us</a> and our expertise</li>
+                <li><a href="#blog">Check out our Blog</a> for event inspiration</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Countdown and redirect timer
+        let countdown = 10;
+        const countdownElement = document.getElementById('countdown');
+        
+        function updateCountdown() {
+            countdownElement.textContent = countdown;
+            
+            if (countdown <= 0) {
+                // Redirect to services page
+                window.location.href = '/services/';
+            } else {
+                countdown--;
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+        
+        // Start the countdown
+        setTimeout(updateCountdown, 1000);
+        
+        // Cancel redirect if user clicks any link
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Clear the timeout to prevent automatic redirect
+                clearTimeout();
+                // Allow normal link navigation
+                return true;
+            });
+        });
+        
+        // Optional: Add a way to cancel the redirect
+        document.querySelector('.redirect-info').addEventListener('click', function() {
+            // You could add a "Cancel redirect" button or functionality here
+        });
+    </script>
+</body>
+</html>
