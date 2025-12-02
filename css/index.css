@@ -2193,6 +2193,16 @@ body {
     border: 1px solid var(--primary-pink);
     margin-bottom: 1rem;
 }
+.footer-brand-logo-name
+{
+    display:flex;
+    align-items:center;
+    margin: auto 0;
+    gap:0.5rem;
+    font-weight:500;
+    font-size:1rem;
+    color:var(--dark-gray);
+}
 
 .footer-brand p {
     color: var(--text-gray);
