@@ -367,7 +367,10 @@
     .about {
         padding: 4rem 0;
     }
-    
+    .about-content {
+        display: flex;
+      flex-direction: column-reverse;
+    }
     .about-img {
         height: 400px;
     }
